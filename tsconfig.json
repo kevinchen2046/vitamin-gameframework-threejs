@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "declaration": false,
+        "target": "es6",
+        "module": "es6",
+        "moduleResolution": "Node"
+    },
+    "include": [
+        "./libs/**/*",
+        "./src/**/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

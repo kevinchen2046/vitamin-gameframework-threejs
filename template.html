@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="keywords" content="" />
+     <% for (var css in htmlWebpackPlugin.files.css) { %>
+    <link href="<%=htmlWebpackPlugin.files.css[css] %>" rel="stylesheet">
+    <% } %>
+    <style>
+        html, body {
+            -ms-touch-action: none;
+            background: #000000;
+            padding: 0;
+            border: 0;
+            margin: 0;
+            height: 100%;
+			overflow: hidden;
+        }
+    </style>
+</head>
+<body style="	margin: 0;
+background-color: rgb(68, 61, 61);
+color: #fff;
+font-family: Monospace;
+font-size: 13px;
+line-height: 24px;
+overscroll-behavior: none;">
+<div id="app" style="margin: auto;width: 100%;height: 100%;" overflow: hidden; position: absolute;></div>
+
+</body>
+</html>
