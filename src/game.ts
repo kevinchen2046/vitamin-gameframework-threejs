@@ -1,11 +1,13 @@
 import * as THREE from "three";
+import { LayerBase } from "./base";
 
-export class GameView {
+export class GameView extends LayerBase{
     private renderer: THREE.WebGLRenderer;
     private camera: THREE.PerspectiveCamera
     private scene: THREE.Scene
     private cube: THREE.Mesh
     constructor(renderer: THREE.WebGLRenderer) {
+        super();
         this.renderer = renderer;
 
         const fov = 75;
@@ -34,13 +36,31 @@ export class GameView {
 
         this.cube = new THREE.Mesh(geometry, material);
         this.scene.add(this.cube);
+
+        var loader = new THREE.ObjectLoader();
+        //创建obj模型加载器对象
+        loader.load("assets/UI/source/succulents.obj", this.start.bind(this));
+        //加载obj完成后执行函数stl() 
+        //stl加载完成后等待执行的函数 
+    }
+
+    private start(object3D: THREE.Object3D) {
+        object3D.scale.set(100, 100, 100);
+        // //放大object3D对象 
+        // var material = new THREE.MeshLambertMaterial({ color: 0xff00ff });
+        // //材质对象
+        // object3D.children.forEach(function (child: THREE.Object3D) {
+        //     child.material = material;
+        //     //object3D对象的子对象网格模型赋予材质对象 
+        // });
+        this.scene.add(object3D);//网格模型添加到场景中 
     }
 
     private resize() {
         // 全屏情况下：设置观察范围长宽比aspect为窗口宽高比
         this.camera.aspect = window.innerWidth / window.innerHeight;
-        
-        this.camera.zoom=Math.min(1, window.innerWidth / 640);
+
+        this.camera.zoom = Math.min(1, window.innerWidth / 640);
         // 渲染器执行render方法的时候会读取相机对象的投影矩阵属性projectionMatrix
         // 但是不会每渲染一帧，就通过相机的属性计算投影矩阵(节约计算资源)
         // 如果相机的一些属性发生了变化，需要执行updateProjectionMatrix ()方法更新相机的投影矩阵

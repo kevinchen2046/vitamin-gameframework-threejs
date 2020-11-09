@@ -1,13 +1,14 @@
 import * as THREE from "three";
 import * as fgui from "../libs/fairygui/FairyGUI";
+import { LayerBase } from "./base";
 
-export class UIView {
+export class UIView extends LayerBase {
     private scene: THREE.Scene
     private renderer: THREE.WebGLRenderer;
 
     private mainMenu: fgui.GComponent;
     constructor(renderer: THREE.WebGLRenderer) {
-
+        super();
         this.renderer = renderer;
 
         this.scene = new THREE.Scene();
@@ -29,12 +30,18 @@ export class UIView {
         fgui.GRoot.inst.addChild(this.mainMenu);
         this.resize();
     }
+
+    public initialize(data: { desc: string }) {
+        if(!this.mainMenu) return;
+        var infolab:fgui.GLabel=this.mainMenu.getChild('info') as fgui.GLabel;
+        infolab.text = data.desc;
+        // infolab.width=infolab['_textField'].textWidth;
+    }
+
     private resize() {
         if (!this.mainMenu) return;
-        
         this.mainMenu.width = fgui.GRoot.inst.width;
         this.mainMenu.height = fgui.GRoot.inst.height;
-        console.log(this.mainMenu.width)
     }
 
     public render(time) {
