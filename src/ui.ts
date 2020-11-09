@@ -31,9 +31,10 @@ export class UIView {
     }
     private resize() {
         if (!this.mainMenu) return;
-
+        
         this.mainMenu.width = fgui.GRoot.inst.width;
         this.mainMenu.height = fgui.GRoot.inst.height;
+        console.log(this.mainMenu.width)
     }
 
     public render(time) {
