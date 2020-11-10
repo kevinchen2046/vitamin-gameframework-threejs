@@ -2,12 +2,13 @@ import * as THREE from "three";
 import { LayerBase } from "./base";
 import { GameView } from "./game";
 import { GameTank } from "./gametank";
+import { GameBalls } from "./gameballs";
+import { GameSkyBox } from "./gameskybox";
 import { UIView } from "./ui";
 
 export class Main {
     private ui: LayerBase;
     private game: LayerBase;
-    private game1: LayerBase;
     constructor() {
         this.init();
     }
@@ -25,15 +26,15 @@ export class Main {
         // renderer.localClippingEnabled = true;
         window.addEventListener('resize', () => renderer.setSize(window.innerWidth, window.innerHeight));
         this.ui = new UIView(renderer);
-        this.game1 = new GameTank(renderer);
-        this.game1.addEventListener('data',(data:any)=>{
+        this.game = new GameBalls(renderer);
+        this.game.addEventListener('data',(data:any)=>{
             this.ui.initialize(data);
         })
         requestAnimationFrame(this.animate);
     }
 
     private render(time) {
-        this.game1.render(time);
+        this.game.render(time);
         this.ui.render(time);
     }
 

@@ -32,8 +32,8 @@ export class UIView extends LayerBase {
     }
 
     public initialize(data: { desc: string }) {
-        if(!this.mainMenu) return;
-        var infolab:fgui.GLabel=this.mainMenu.getChild('info') as fgui.GLabel;
+        if (!this.mainMenu) return;
+        var infolab: fgui.GLabel = this.mainMenu.getChild('info') as fgui.GLabel;
         infolab.text = data.desc;
         // infolab.width=infolab['_textField'].textWidth;
     }
