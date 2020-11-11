@@ -1,8 +1,8 @@
 import * as THREE from "three";
-import { LayerBase } from "./base";
 
-export class GameTank extends LayerBase {
-    private renderer: THREE.WebGLRenderer;
+import { GameBase } from "../vitamin/manager/Fairy";
+
+export class GameTank extends GameBase {
 
     private scene: THREE.Scene
 
@@ -32,9 +32,8 @@ export class GameTank extends LayerBase {
     private tankPosition: THREE.Vector2;
     private tankTarget: THREE.Vector2;
     constructor(renderer: THREE.WebGLRenderer) {
-        super();
-        this.renderer = renderer;
-
+        super(renderer);
+    
         renderer.setClearColor(0xAAAAAA);
         renderer.shadowMap.enabled = true;
 
@@ -239,29 +238,20 @@ export class GameTank extends LayerBase {
             { cam: this.tankCamera, desc: 'above back of tank', },
         ];
         window.addEventListener('resize', this.resize.bind(this));
-        this.resize();
+        this.resize(window.innerWidth, window.innerHeight);
     }
 
-    private resize() {
-        // // 全屏情况下：设置观察范围长宽比aspect为窗口宽高比
-        // this.camera.aspect = window.innerWidth / window.innerHeight;
-        // this.camera.zoom = Math.min(1, window.innerWidth / 640);
-        // // 渲染器执行render方法的时候会读取相机对象的投影矩阵属性projectionMatrix
-        // // 但是不会每渲染一帧，就通过相机的属性计算投影矩阵(节约计算资源)
-        // // 如果相机的一些属性发生了变化，需要执行updateProjectionMatrix ()方法更新相机的投影矩阵
-        // this.camera.updateProjectionMatrix();
-
+    public resize(width: number, height: number) {
         this.cameras.forEach((cameraInfo) => {
             const camera = cameraInfo.cam;
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.zoom = Math.min(1, window.innerWidth / 640);
+            camera.aspect = width / height;
+            camera.zoom = Math.min(1, width / 640);
             camera.updateProjectionMatrix();
         });
     }
 
     public render(time) {
-        this.renderer.clear();
-        this.renderer.setViewport(0, 0, window.innerWidth, window.innerHeight);
+        super.render(time);
         time *= 0.001;
 
         // 目标移动
@@ -299,6 +289,6 @@ export class GameTank extends LayerBase {
         const camera = this.cameras[time * .25 % this.cameras.length | 0];
         this.dispatchEvent({ type: 'data', desc: camera.desc });
 
-        this.renderer.render(this.scene, camera.cam);
+        this._renderer.render(this.scene, camera.cam);
     }
 }

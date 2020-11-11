@@ -1,17 +1,16 @@
 
 import * as THREE from "three";
-import { LayerBase } from "./base";
 
-export class GameBalls extends LayerBase {
-    private renderer: THREE.WebGLRenderer;
+import { GameBase } from "../vitamin/manager/Fairy";
+import { vitamin } from "../vitamin/vitamin";
+
+export class GameBalls extends GameBase {
     private camera: THREE.PerspectiveCamera
     private scene: THREE.Scene
     private sphereShadowBases: { base: THREE.Object3D, sphereMesh: THREE.Mesh, shadowMesh: THREE.Mesh, y: number }[];
     constructor(renderer: THREE.WebGLRenderer) {
-        super();
-        this.renderer = renderer;
-
-        this.renderer.physicallyCorrectLights = true;
+        super(renderer);
+        this._renderer.physicallyCorrectLights = true;
 
         const fov = 45;
         const aspect = 2;  // the canvas default
@@ -114,16 +113,14 @@ export class GameBalls extends LayerBase {
             this.scene.add(light);
             this.scene.add(light.target);
         }
-
-        window.addEventListener('resize', this.resize.bind(this));
-        this.resize();
+        this.resize(window.innerWidth, window.innerHeight);
     }
 
-    private resize() {
+    public resize(width: number, height: number) {
         // 全屏情况下：设置观察范围长宽比aspect为窗口宽高比
-        this.camera.aspect = window.innerWidth / window.innerHeight;
+        this.camera.aspect = width / height;
 
-        this.camera.zoom = Math.min(1, window.innerWidth / 640);
+        this.camera.zoom = Math.min(1, width / vitamin.designWidth);
         // 渲染器执行render方法的时候会读取相机对象的投影矩阵属性projectionMatrix
         // 但是不会每渲染一帧，就通过相机的属性计算投影矩阵(节约计算资源)
         // 如果相机的一些属性发生了变化，需要执行updateProjectionMatrix ()方法更新相机的投影矩阵
@@ -131,8 +128,7 @@ export class GameBalls extends LayerBase {
     }
 
     public render(time) {
-        this.renderer.clear();
-        this.renderer.setViewport(0, 0, window.innerWidth, window.innerHeight);
+        super.render(time);
         time *= 0.001;  // convert to seconds
 
         this.sphereShadowBases.forEach((sphereShadowBase, ndx) => {
@@ -156,7 +152,7 @@ export class GameBalls extends LayerBase {
             (shadowMesh.material as THREE.MeshBasicMaterial).opacity = THREE.MathUtils.lerp(1, .25, yOff);
         });
 
-        this.renderer.render(this.scene, this.camera);
+        this._renderer.render(this.scene, this.camera);
     }
 }
 

@@ -11,6 +11,7 @@
     "three": "^0.116.1",
     "ts-loader": "^7.0.4",
     "typescript": "^3.9.2",
+    "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11"
   },

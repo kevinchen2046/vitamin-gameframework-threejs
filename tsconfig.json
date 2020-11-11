@@ -1,13 +1,14 @@
 {
     "compilerOptions": {
         "declaration": false,
+        "experimentalDecorators": true,
         "target": "es6",
         "module": "es6",
         "moduleResolution": "Node"
     },
     "include": [
-        "./libs/**/*",
-        "./src/**/*"
+        "libs",
+        "src"
     ],
     "exclude": [
         "node_modules"

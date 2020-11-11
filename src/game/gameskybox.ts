@@ -1,17 +1,17 @@
 import * as THREE from "three";
-import { OrbitControls } from "../libs/control/OrbitContrils"
+import { OrbitControls } from "../../libs/control/OrbitContrils"
 
-import { LayerBase } from "./base";
 
-export class GameSkyBox extends LayerBase {
-    private renderer: THREE.WebGLRenderer;
+import { GameBase } from "../vitamin/manager/Fairy";
+
+export class GameSkyBox extends GameBase {
+
     private camera: THREE.PerspectiveCamera
     private scene: THREE.Scene
     private cubes: THREE.Mesh[];
     private spheres: THREE.Mesh[];
     constructor(renderer: THREE.WebGLRenderer) {
-        super();
-        this.renderer = renderer;
+        super(renderer);
 
         const fov = 75;
         const aspect = 2;  // the canvas default
@@ -20,7 +20,7 @@ export class GameSkyBox extends LayerBase {
         this.camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
         this.camera.position.z = 3;
 
-        const controls = new OrbitControls(this.camera, this.renderer.domElement);
+        const controls = new OrbitControls(this.camera, renderer.domElement);
         controls.target.set(0, 0, 0);
         controls.update();
 
@@ -74,24 +74,23 @@ export class GameSkyBox extends LayerBase {
             }
         });
         window.addEventListener('resize', this.resize.bind(this));
-        this.resize();
+        this.resize(window.innerWidth, window.innerHeight);
     }
 
-
-    private resize() {
+    public resize(width: number, height: number) {
         // 全屏情况下：设置观察范围长宽比aspect为窗口宽高比
-        this.camera.aspect = window.innerWidth / window.innerHeight;
+        this.camera.aspect = width / height;
 
-        this.camera.zoom = Math.min(1, window.innerWidth / 640);
+        this.camera.zoom = Math.min(1, width / 640);
         // 渲染器执行render方法的时候会读取相机对象的投影矩阵属性projectionMatrix
         // 但是不会每渲染一帧，就通过相机的属性计算投影矩阵(节约计算资源)
         // 如果相机的一些属性发生了变化，需要执行updateProjectionMatrix ()方法更新相机的投影矩阵
         this.camera.updateProjectionMatrix();
     }
 
+
     public render(time) {
-        this.renderer.clear();
-        this.renderer.setViewport(0, 0, window.innerWidth, window.innerHeight);
+        super.render(time);
         time *= 0.001;
 
         this.cubes.forEach((cube, ndx) => {
@@ -105,6 +104,6 @@ export class GameSkyBox extends LayerBase {
             sphere.position.x = Math.cos(time + i);
             sphere.position.y = Math.sin(time + i * 1.1);
         }
-        this.renderer.render(this.scene, this.camera);
+        this._renderer.render(this.scene, this.camera);
     }
 }

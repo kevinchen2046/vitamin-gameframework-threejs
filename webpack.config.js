@@ -3,10 +3,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 module.exports = {
     mode: 'development',
     entry: path.resolve(__dirname, './src/index.ts'),
+
     devtool: 'source-map',
     plugins: [
         new CleanWebpackPlugin(),
@@ -16,10 +17,10 @@ module.exports = {
         }),
         new CopyWebpackPlugin([
             {
-              from:path.resolve(__dirname, 'assets'),
-              to:path.resolve(__dirname, 'build/assets')
+                from: path.resolve(__dirname, 'assets'),
+                to: path.resolve(__dirname, 'build/assets')
             }
-          ])
+        ])
     ],
     resolve: {
         extensions: ['.tsx', '.ts', '.js']
@@ -71,7 +72,8 @@ module.exports = {
 
     optimization: {
         minimize: true,
-        minimizer: [new TerserPlugin({ sourceMap: true })],
+        minimizer: [new TerserPlugin({ terserOptions: { keep_classnames: true }, sourceMap: true })],
+        //minimizer: [new UglifyJsPlugin({ uglifyOptions: { reserved: true }, sourceMap: true })],
         splitChunks: {
             chunks: 'all',
             automaticNameDelimiter: '_',

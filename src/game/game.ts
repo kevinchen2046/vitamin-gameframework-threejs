@@ -1,23 +1,19 @@
 import * as THREE from "three";
-import { LayerBase } from "./base";
+import { GameBase } from "../vitamin/manager/Fairy";
 
-export class GameView extends LayerBase{
-    private renderer: THREE.WebGLRenderer;
+export class GameView extends GameBase {
     private camera: THREE.PerspectiveCamera
     private scene: THREE.Scene
     private cube: THREE.Mesh
     constructor(renderer: THREE.WebGLRenderer) {
-        super();
-        this.renderer = renderer;
-
+        super(renderer);
         const fov = 75;
         const aspect = 2;  // the canvas default
         const near = 0.1;
         const far = 5;
         this.camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
         this.camera.position.z = 2;
-        window.addEventListener('resize', this.resize.bind(this));
-        this.resize();
+
         this.scene = new THREE.Scene();
         {
             const color = 0xFFFFFF;
@@ -42,6 +38,7 @@ export class GameView extends LayerBase{
         loader.load("assets/UI/source/succulents.obj", this.start.bind(this));
         //加载obj完成后执行函数stl() 
         //stl加载完成后等待执行的函数 
+        this.resize(window.innerWidth, window.innerHeight);
     }
 
     private start(object3D: THREE.Object3D) {
@@ -56,11 +53,11 @@ export class GameView extends LayerBase{
         this.scene.add(object3D);//网格模型添加到场景中 
     }
 
-    private resize() {
+    public resize(width: number, height: number) {
         // 全屏情况下：设置观察范围长宽比aspect为窗口宽高比
-        this.camera.aspect = window.innerWidth / window.innerHeight;
+        this.camera.aspect = width / height;
 
-        this.camera.zoom = Math.min(1, window.innerWidth / 640);
+        this.camera.zoom = Math.min(1, width / 640);
         // 渲染器执行render方法的时候会读取相机对象的投影矩阵属性projectionMatrix
         // 但是不会每渲染一帧，就通过相机的属性计算投影矩阵(节约计算资源)
         // 如果相机的一些属性发生了变化，需要执行updateProjectionMatrix ()方法更新相机的投影矩阵
@@ -68,12 +65,12 @@ export class GameView extends LayerBase{
     }
 
     public render(time) {
-        this.renderer.clear();
-        this.renderer.setViewport(0, 0, window.innerWidth, window.innerHeight);
+        this._renderer.clear();
+        this._renderer.setViewport(0, 0, window.innerWidth, window.innerHeight);
         time *= 0.001;  // convert time to seconds
         this.cube.rotation.x = time;
         this.cube.rotation.y = time;
-        this.renderer.render(this.scene, this.camera);
+        this._renderer.render(this.scene, this.camera);
     }
 }
 
