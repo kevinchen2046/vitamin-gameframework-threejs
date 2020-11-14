@@ -1,0 +1,30 @@
+{
+	"engineVersion": "5.2.29",
+	"compilerVersion": "5.2.29",
+	"template": {},
+	"target": {
+		"current": "web"
+	},
+	"modules": [
+		{
+			"name": "three",
+			"path": "./libs/three"
+		},
+		{
+			"name": "fairygui",
+			"path": "./libs/fairygui"
+		},
+		{
+			"name": "control",
+			"path": "./libs/control"
+		},
+		{
+			"name": "zlib",
+			"path": "./libs/zlib"
+		},
+		{
+			"name": "fbxloader",
+			"path": "./libs/fbxloader"
+		}
+	]
+}

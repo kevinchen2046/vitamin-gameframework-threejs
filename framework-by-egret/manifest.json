@@ -1,0 +1,25 @@
+{
+	"initial": [
+		"libs/three/three.js",
+		"libs/fairygui/fairygui.js",
+		"libs/zlib/zlib.js",
+		"libs/fbxloader/fbxloader.js"
+	],
+	"game": [
+		"bin-debug/vitamin/base/Base.js",
+		"bin-debug/vitamin/base/Injecter.js",
+		"bin-debug/vitamin/manager/Fairy.js",
+		"bin-debug/ui/MainView.js",
+		"bin-debug/game/gameskybox.js",
+		"bin-debug/game/gametank.js",
+		"bin-debug/model/ModelUser.js",
+		"bin-debug/command/CmdChat.js",
+		"bin-debug/vitamin/vitamin.js",
+		"bin-debug/index.js",
+		"bin-debug/game/game.js",
+		"bin-debug/vitamin/base/Watcher.js",
+		"bin-debug/game/gameballs.js",
+		"bin-debug/vitamin/manager/UIManager.js",
+		"bin-debug/vitamin/net/Net.js"
+	]
+}
