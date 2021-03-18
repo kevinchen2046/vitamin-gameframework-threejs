@@ -1,6 +1,6 @@
 
 import * as THREE from "three";
-import { FBXLoader } from "../../libs/fbxloader/FBXLoader";
+import { FBXLoader } from "fbxloader.ts";
 import { GameBase } from "../vitamin/manager/Fairy";
 import { vitamin } from "../vitamin/vitamin";
 
@@ -116,8 +116,9 @@ export class GameBalls extends GameBase {
 
         // model
         var fbxloader = new FBXLoader();
-        fbxloader.load('models/fbx/ball.fbx', (object: THREE.Object3D) => {
-
+        fbxloader.load('assets/UI/source/succulents.fbx', (target) => {
+            var object:THREE.Object3D=target as any;
+            console.log(object);
             // mixer = new THREE.AnimationMixer(object);
 
             // var action = mixer.clipAction(object.animations[0]);
@@ -133,6 +134,7 @@ export class GameBalls extends GameBase {
             //     }
 
             // });
+            object.scale.set(0.1,0.1,0.1);
             this.scene.add(object);
         });
 

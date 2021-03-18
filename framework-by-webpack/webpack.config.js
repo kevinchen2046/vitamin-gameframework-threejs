@@ -80,7 +80,7 @@ module.exports = {
 
     optimization: {
         minimize: true,
-        minimizer: [new TerserPlugin({ terserOptions: { keep_classnames: true }, sourceMap: true })],
+        minimizer: [new TerserPlugin({ terserOptions: { keep_classnames: true, compress: false,module:true,ecma:5, }, sourceMap: true })],
         //minimizer: [new UglifyJsPlugin({ uglifyOptions: { reserved: true }, sourceMap: true })],
         splitChunks: {
             chunks: 'all',

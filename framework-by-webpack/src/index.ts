@@ -13,8 +13,10 @@ import { CmdChatSend } from "./command/CmdChat";
 export class Main {
 
     constructor() {
+        //强制引用 否则webpack会忽略该文件
         ModelUser;
         CmdChatSend;
+        
         this.init();
     }
 
