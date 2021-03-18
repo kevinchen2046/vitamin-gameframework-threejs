@@ -5,6 +5,7 @@
   "main": "",
   "dependencies": {
     "awesome-typescript-loader": "^5.2.1",
+    "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.1.1",
     "fbxloader.ts": "^1.0.5",
