@@ -17,6 +17,10 @@ class GameBalls extends vitamin.GameBase {
         this.scene = new THREE.Scene();
         this.scene.background = new THREE.Color('white');
 
+        const controls = new OrbitControls(this.camera, renderer.domElement);
+        controls.target.set(0, 0, 0);
+        controls.update();
+
         const color = 0xFFFFFF;
         this.scene.fog = new THREE.Fog(color, near, far / 2);
         this.scene.background = new THREE.Color(color);
@@ -41,7 +45,6 @@ class GameBalls extends vitamin.GameBase {
         const mesh = new THREE.Mesh(planeGeo, planeMat);
         mesh.rotation.x = Math.PI * -.5;
         this.scene.add(mesh);
-
 
         const shadowTexture = loader.load('https://threejsfundamentals.org/threejs/resources/images/roundshadow.png');
         this.sphereShadowBases = [];

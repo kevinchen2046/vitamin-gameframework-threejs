@@ -15,8 +15,8 @@
 			"path": "./libs/fairygui"
 		},
 		{
-			"name": "control",
-			"path": "./libs/control"
+			"name": "orbitcontrils",
+			"path": "./libs/orbitcontrils"
 		},
 		{
 			"name": "zlib",

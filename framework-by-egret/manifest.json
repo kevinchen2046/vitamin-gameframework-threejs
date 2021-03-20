@@ -2,6 +2,7 @@
 	"initial": [
 		"libs/three/three.js",
 		"libs/fairygui/fairygui.js",
+		"libs/orbitcontrils/orbitcontrils.js",
 		"libs/zlib/zlib.js",
 		"libs/fbxloader/fbxloader.js"
 	],

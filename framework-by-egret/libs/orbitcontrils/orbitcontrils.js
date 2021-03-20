@@ -1,9 +1,8 @@
-'use strict';
-var exports = window; 
+"use strict";
 
-exports.MapControls = exports.OrbitControls = undefined;
+window.MapControls = window.OrbitControls = undefined;
 
-var _three = require('three');
+var _three = window.THREE;
 
 // This set of controls performs orbiting, dollying (zooming), and panning.
 // Unlike TrackballControls, it maintains the "up" direction object.up (+Y by default).
@@ -1121,6 +1120,6 @@ var MapControls = function MapControls(object, domElement) {
 MapControls.prototype = Object.create(_three.EventDispatcher.prototype);
 MapControls.prototype.constructor = MapControls;
 
-exports.OrbitControls = OrbitControls;
-exports.MapControls = MapControls;
+window.OrbitControls = OrbitControls;
+window.MapControls = MapControls;
 

@@ -4,6 +4,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+
 // const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 // const ForkTsCheckerNotifierWebpackPlugin = require('fork-ts-checker-notifier-webpack-plugin');
 
@@ -12,6 +13,7 @@ module.exports = {
     entry: path.resolve(__dirname, './src/index.ts'),
 
     devtool: 'source-map',
+
     plugins: [
         // //typescript 类型检查-------------
         // new ForkTsCheckerWebpackPlugin({
