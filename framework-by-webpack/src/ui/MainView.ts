@@ -3,18 +3,20 @@ import { ViewFairy } from "../vitamin/manager/Fairy";
 import * as fgui from "../../libs/fairygui/FairyGUI";
 import { Model } from "../vitamin/base/Injecter";
 import { ModelUser } from "../model/ModelUser";
+import { CmdChatSend } from "../command/CmdChat";
 
 export class MainView extends ViewFairy {
 
-    @Model
+    @Model(ModelUser)
     public user: ModelUser;
 
     public info: fgui.GLabel;
 
     public enter() {
         console.log(this.info);
+        console.log(this.user);
         console.log(this.user.name);
-        this.exec("chat.send");
+        this.execClazz(CmdChatSend);
         this.info.text = "data.desc";
     }
 

@@ -14,8 +14,8 @@ export class Main {
 
     constructor() {
         //强制引用 否则webpack会忽略该文件
-        ModelUser;
-        CmdChatSend;
+        // ModelUser;
+        // CmdChatSend;
         
         this.init();
     }

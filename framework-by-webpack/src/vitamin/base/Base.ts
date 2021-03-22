@@ -1,4 +1,4 @@
-import { __execCmd, __injectCmdEnd, __injectInstance, __injectModel, __instance, __unInjectCmdEnd } from "./Injecter";
+import { __execCmd, __execCmdClazz, __injectCmdEnd, __injectInstance, __injectModel, __instance, __unInjectCmdEnd } from "./Injecter";
 import { Net } from "../net/Net";
 
 export abstract class ModelBase {
@@ -19,6 +19,9 @@ export abstract class ViewBase {
     }
     protected exec(cmdRoute: string, ...args) {
         __execCmd(cmdRoute, ...args);
+    }
+    protected execClazz(cmdClazz:any,...args) {
+        __execCmdClazz(cmdClazz, ...args);
     }
 }
 

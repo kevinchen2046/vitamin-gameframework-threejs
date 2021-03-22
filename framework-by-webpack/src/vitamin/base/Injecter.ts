@@ -122,12 +122,16 @@ export function ModelClass(...dependents) {
  * @param instance 
  * @param property 
  */
-export function Model(instance: any, property: string) {
-    var name = `Model${property.charAt(0).toLocaleUpperCase()}${property.substring(1, property.length)}`;
-    var clazzName = instance.constructor.name;
-    if (!__injects.model[clazzName]) __injects.model[clazzName] = [];
-    __injects.model[clazzName].push({ property: property, modelName: name });
-    // __injects.push({ instance: instance, property: property, modelName: name });
+export function Model(modelclazz:any) {
+    return function (instance: any, property: string) {
+        var modelclazzName: string = __getClassName(modelclazz);
+        // var model=__modelMap[clazzName].instance;
+        // var name = `Model${property.charAt(0).toLocaleUpperCase()}${property.substring(1, property.length)}`;
+        var clazzName = instance.constructor.name;
+        if (!__injects.model[clazzName]) __injects.model[clazzName] = [];
+        __injects.model[clazzName].push({ property: property, modelName: modelclazzName });
+        // __injects.push({ instance: instance, property: property, modelName: name });
+    }
 }
 
 function hasDependents(dependents) {
@@ -246,6 +250,18 @@ export async function __execCmd(cmdRoute: string, ...args) {
         }
         var result = await __cmdRouteMap[cmdRoute].instance.exec(...args);
         var route = __getComdRoute(__cmdRouteMap[cmdRoute].instance);
+        __commandcher.emit(route, result);
+    }
+}
+
+export async function __execCmdClazz(cmdClazz:any, ...args) {
+    let cmdClazzName=__getClassName(cmdClazz);
+    if (__cmdNameMap[cmdClazzName]) {
+        if (!__cmdNameMap[cmdClazzName].instance) {
+            __cmdNameMap[cmdClazzName].instance = new (__cmdNameMap[cmdClazzName].clazz)();
+        }
+        var result = await __cmdNameMap[cmdClazzName].instance.exec(...args);
+        var route = __getComdRoute(__cmdNameMap[cmdClazzName].instance);
         __commandcher.emit(route, result);
     }
 }
